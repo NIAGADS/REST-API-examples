@@ -41,8 +41,7 @@ def variant_lookup_service(variant):
     
     print("Variant Lookup Service")
     rjson = submit_request(requestUri, payload)
-
-    return rjson[C.VARIANT]['flagged_genomicsdb_datasets'] if rjson else None
+    return rjson['result'][C.VARIANT]['flagged_genomicsdb_datasets'] if rjson else None
 
 if __name__ == "__main__":
     result = variant_lookup_service(C.VARIANT)
@@ -51,7 +50,7 @@ if __name__ == "__main__":
     result = variant_gwas_hits_service(C.VARIANT)
     print("Variant GWAS Hits Result:")
     print(json.dumps(result, indent=4, sort_keys=True))
-    
+
     # print("Result (JSON) keys:", result.keys())
     
 

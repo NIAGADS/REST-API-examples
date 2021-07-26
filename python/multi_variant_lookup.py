@@ -19,16 +19,22 @@ def submit_request(uri, params):
 if __name__ == "__main__":
   endpoint = 'variant'
   requestUri = join(C.SERVICE_URI, endpoint)
-  payload = {'id': C.VARIANT_LIST}
+  payload = {'id':  C.VARIANT_LIST}
+
+  variants = C.VARIANT_LIST.split(',')
+  print("Number variants in lookup:", len(variants))
 
   rjson = submit_request(requestUri, payload)
 
   # response is paged / how many pages do we expect:
+  print("Paging: ", json.dumps(rjson['paging']))
   numPages = rjson['paging']['total_pages']
 
   # TODO: iterate over pages & perform some operation 
-  for p in range(0, numPages - 1):
+  for p in range(1, numPages + 1): # ranges not inclusive end
     print("Requesting Page ", p, "of", numPages)
     payload = {'id': C.VARIANT_LIST, 'page': p}
     rjson = submit_request(requestUri, payload)
+    # print(json.dumps(rjson))
+  
 
